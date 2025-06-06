@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search Results</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container py-4">
+    <h1 class="mb-4">Search Results for: "{{ query }}"</h1>
+
+    {% if results %}
+      <div class="list-group">
+        {% for result in results %}
+          <div class="list-group-item bg-white mb-3 shadow-sm p-3 rounded">
+            {% if result.title %}
+              <h5 class="mb-1">{{ result.title }}</h5>
+            {% endif %}
+            <p class="mb-1">
+              {{ result.content }}
+            </p>
+            <small class="text-muted d-block">
+              <strong>Author:</strong> {{ result.author or 'Unknown' }} |
+              <strong>Subreddit:</strong> {{ result.subreddit or 'N/A' }} |
+              <strong>Score:</strong> {{ result.reddit_score or 0 }} |
+              <strong>ES Score:</strong> {{ result.score | round(2) }} |
+              <strong>Date:</strong> {{ result.timestamp }}
+            </small>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="alert alert-warning">No results found.</div>
+    {% endif %}
+
+    <a href="/" class="btn btn-secondary mt-4">Back to Search</a>
+  </div>
+</body>
+</html>
